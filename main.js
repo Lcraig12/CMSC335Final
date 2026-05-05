@@ -17,3 +17,12 @@ app.listen(portNum, () => {
 app.get("/", (req, res) => {
     res.render("homeScreen");
 });
+
+app.post("/play", (req,res) => {
+    let {world} = req.body;
+    const variables = {
+        path: path,
+        world:world
+    }
+    res.render("open",variables);
+});

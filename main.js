@@ -15,5 +15,5 @@ app.listen(portNum, () => {
 });
 
 app.get("/", (req, res) => {
-    res.render("index");
+    res.render("homeScreen");
 });

@@ -14,7 +14,6 @@ app.set("views", path.resolve(__dirname, "templates"));
 
 console.log(`Web server started and running at http://localhost:${portNum}\n`);
 
-
 app.get("/", (req, res) => {
-    res.render("homeScreen.ejs")
+    res.render("index");
 })

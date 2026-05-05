@@ -1,0 +1,17 @@
+/home = homepage
+when the post happens, the form will contain three fields with names
+	world > stringified json which contains the world
+	name > string which is name of world
+	username > string of username
+
+ejs file openers takes 4 args
+	path > contains the path
+	world > contains the world ejs file
+	name > world name
+	username > user name
+
+the world ejs file is a stringified object with 4 fields
+	isNew > bool which indicates if this is a new world or an existing world
+	name > string of world name
+	world > stringified json which contains the world. You need not parse this on the servers side 
+	username > string of username

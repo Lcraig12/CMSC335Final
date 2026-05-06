@@ -1,5 +1,6 @@
 
-require("dotenv").congfig();
+require("dotenv").config();
+const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
 const Player = require("./model/Player");
@@ -10,7 +11,7 @@ mongoose.connect(uri);
 const app = express();
  
 app.set("view engine", "ejs");
-app.set("views", path.resolve(__dirname, "templates"));
+app.set("templates", path.resolve(__dirname, "templates"));
 
 app.listen(portNum, () => { 
     console.log(`Web server started and running at http://localhost:${portNum}\n`);
@@ -21,8 +22,10 @@ app.get("/", async (req, res) => {
     try{
         const response = await fetch("https://api.animechan.io/v1/quotes/random");
         const quote = await response.json();
+    /** 
     console.log("API response:", quote);
-    console.log("Extracted quote:", quote.data.content);
+    console.log("Extracted quote:", quote.data.content); 
+    */
         res.render("homeScreen", { quote: quote.data.content});
     } catch (e) {
         console.error("API ERROR:", e);
@@ -34,6 +37,10 @@ app.get("/", async (req, res) => {
 app.get("/returningPlayer", (req, res) => {
     res.render("returningPlayer");
 });
+
+
+
+
 
 
 

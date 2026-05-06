@@ -14,9 +14,26 @@ app.listen(portNum, () => {
     console.log(`Web server started and running at http://localhost:${portNum}\n`);
 });
 
-app.get("/", (req, res) => {
-    res.render("homeScreen");
+/** On startup... Welcome Screen, with API */
+app.get("/", async (req, res) => {
+    try{
+        const response = await fetch("https://api.animechan.io/v1/quotes/random");
+        const quote = await response.json();
+    console.log("API response:", quote);
+    console.log("Extracted quote:", quote.data.content);
+        res.render("homeScreen", { quote: quote.data.content});
+    } catch (e) {
+        console.error("API ERROR:", e);
+        res.render("homeScreen", {quote: "Hmm, no advice for now... \n (out of API Tokens)"}); 
+    }
 });
+
+
+app.get("/returningPlayer", (req, res) => {
+    res.render("returningPlayer");
+});
+
+
 
 app.post("/play", (req,res) => {
     let {world} = req.body;
@@ -27,10 +44,11 @@ app.post("/play", (req,res) => {
     res.render("open",variables);
 });
 
+/**
 app.post("/home", (req,res) => { //this is specifically for when the game gets saved.
     let {world,worldname,username} = req.body;
     //this is where database stuff has to happen.
-    let gs = /*some code that gets the worlds vector from the database given the username IMPLEMENT THIS*/
+    let gs = // some code that gets the worlds vector from the database given the username IMPLEMENT THIS 
     let gso = JSON.parse(gs);
     let findex = -1;
     for (let i = 0; i < gso.length; i++) {
@@ -45,11 +63,11 @@ app.post("/home", (req,res) => { //this is specifically for when the game gets s
     }
     let g2 = JSON.stringify(gso);
 	
-    /*now we Need some code that will put g2 back in the database where gs was previously IMPLEMENT THIS TOO*/
+    // now we Need some code that will put g2 back in the database where gs was previously IMPLEMENT THIS TOO
 
-    res.render("homeScreen");//I'm not sure if going directly to home with no fields is correct but that's a problem for later.
+    res.render("homeScreen"); //I'm not sure if going directly to home with no fields is correct but that's a problem for later.
 });
-
+*/
 
 //this function takes the raw worlds from the table, the username, and the path, and returns a string containing the table that is ready to be
 //inserted into an innerHTML element somewhere. -Ian

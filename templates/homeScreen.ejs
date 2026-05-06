@@ -8,17 +8,19 @@
 </head>
 <body>
     <div>
+        <h1>Welcome</h1>
+
         <form action="">
-            <h1>Welcome</h1>
 
-            <form action="">
+            <button id="createPlayer" type="button" onclick="window.location.href='createPlayer'">Create Player</button>
 
-                <button>Create Player</button>
-
-                <button>Returning Player</button>
-                <!-- Add a strangers wisdom API PULL FOR QUOTE -->
-            </form>
+            <button id="returningPlayer" type="button" onclick="window.location.href='/returningPlayer'">Returning Player</button>
+            
         </form>
+        <blockquote>
+            <h3>A strangers Advice</h3>
+            <p><%= quote %></p> <!-- API PULL FOR QUOTE -->
+        </blockquote>
     </div>
 </body>
 </html>

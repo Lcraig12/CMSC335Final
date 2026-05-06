@@ -2,12 +2,12 @@
 require("dotenv").congfig();
 const express = require("express");
 const mongoose = require("mongoose");
+const Player = require("./model/Player");
 
 const portNum = 5001;
 const uri = process.env.MONGO_CONNECTION_STRING;
 mongoose.connect(uri);
 const app = express();
-
  
 app.set("view engine", "ejs");
 app.set("views", path.resolve(__dirname, "templates"));

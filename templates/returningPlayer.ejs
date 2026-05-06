@@ -8,10 +8,12 @@
 <body>
     <div id="returningPlayerLogin">
         <form action=""> <!-- ACTION and METHOD-->
-        <legend><h1 class="custom_large_main_menu_text">Log in <|> -- User -- <|></h1> <!-- TODO What's this <|> User <|> stuff, ifs its meant ot be the users name, they haven't signed in yet-->
-            <label for=""><p class="custom_main_menu_text">Username: <input type="text"></p></label>
+        <legend style="border: solid 1px black"><h3>Log In</h1>
+            <label for="username">Username: </label>
+            <input type="text" id="username" name="Username" required>
             
-            <label for=""><p class="custom_main_menu_text">Password: <input type="text"></p></label>
+            <label for="password">Password: </label>
+            <input type="text" id="password" name="password" required>
 
             <button class="center_button" type="submit">Log In</button>
             <button class="center_button" type="button" onclick="window.location.href='/'">Go Back</button>

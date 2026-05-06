@@ -26,3 +26,22 @@ app.post("/play", (req,res) => {
     }
     res.render("open",variables);
 });
+
+//this function takes the raw worlds from the table, the username, and the path, and returns a string containing the table that is ready to be
+//inserted into an innerHTML element somewhere. -Ian
+function getTableFromWorlds(worlds,username,path) {//this messed up formatting is what I get for writing this in notepad.
+	const wv = JSON.parse(worlds);
+	let ret = "<table>";
+	wv.forEach((e)=>{
+		const nw = {
+			isNew: false,
+			name: e.name,
+			world: e.world,
+			username: username
+		};
+		ret = ret.concat(`<tr><td>${e.name}<form method="post" action="${path}/play"><input type="text" hidden value="${JSON.stringify(nw)}" name="world"><button type="submit">Play World</button></form></tr></td>`);
+		
+	});
+	ret = ret.concat("</table>");
+	return ret;
+}

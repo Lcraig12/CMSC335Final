@@ -6,6 +6,7 @@
     <title>Document</title>
 </head>
 <body>
+    <h1> <%= player.username %>, select a world from the list: </h1>
     <% for (const [name, world] of Object.entries(worlds)) { %>
         <div>
             <h3><%= name %></h3>

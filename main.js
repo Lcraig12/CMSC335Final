@@ -124,14 +124,18 @@ app.get("/worldList", async (req, res) => {
 
 
 app.post("/play", (req,res) => {
-    let {semiworld} = req.body;
+    let {wname, uname, worldactual, newness} = req.body;
+	let neww = false;
+	if (newness === "true") {
+		neww = true;
+	}
     const variables = {
         path: path,
         world: {
-			isNew: false,
-			name: /*need to get*/,
-			world: semiworld,
-			username: /*need to get*/
+			isNew: neww,
+			name: wname,
+			world: worldactual,
+			username: uname
 		}
     }
     res.render("open",variables);

@@ -42,6 +42,8 @@ app.get("/", async (req, res) => {
 
 app.get("/returningPlayer", (req, res) => { res.render("returningPlayer"); });
 
+app.get("/createPlayer", (req, res) => { res.render("createPlayer"); });
+
 /**
 app.post("/returningPlayer", (req, res) => { 
     try {

@@ -2,6 +2,7 @@
 
 const path = require("path");
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const crtpyo = require('crypto'); //this is for storing passwords
 
@@ -21,6 +22,7 @@ app.set("view engine", "ejs");
 app.set("views", path.resolve(__dirname, "views"));
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 mongoose.connect(uri)
     .then(() => {
@@ -43,6 +45,21 @@ app.get("/", async (req, res) => {
 
 app.get("/returningPlayer", (req, res) => { res.render("returningPlayer"); });
 
+app.post("/returningPlayer", async (req,res) => {
+    try { 
+        const formUsername = req.body.username;
+        const formPassword = req.body.password;
+        const player = await Player.findOne({ username: formUsername });
+
+        if (!player) {
+            return res.render("/returningPlayer", {error: "Player not found!"});
+        }
+
+        if (player.password === formPassword) {
+            res.cookie("username", formUsername);
+            res.redirect("/worldList");
+        } else {
+            res.render("returningPlayer", { error: "Wrong Password. Try again." });
 app.get("/createPlayer", (req, res) => { res.render("createPlayer"); });
 
 /**
@@ -52,12 +69,24 @@ app.post("/returningPlayer", (req, res) => {
         username: req.body.username,
         password: req.body.password
         }
-        await req.db. ... 
+    } catch (e) {
+        console.error(e);
+        res.status(500).send("Server Error");
     }
 });
-*/
 
+app.get("/worldList", async (req, res) => {
+    const username = req.cookies.username;
 
+    if (!username) { 
+        return res.redirect("/returningPlayer");
+    }
+
+    const player = await Player.findOne({username: username });
+    const worlds = Object.fromEntries(player.worlds);
+    res.render("worldList", { player, worlds });
+
+})
 
 
 app.post("/play", (req,res) => {

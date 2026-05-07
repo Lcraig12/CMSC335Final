@@ -6,10 +6,16 @@
     <title>Document</title>
 </head>
 <body>
-    <div id="worldList">
+    <% for (const [name, world] of Object.entries(worlds)) { %>
+        <div>
+            <h3><%= name %></h3>
+            <!-- can put some type of data here I j dk what,-->
 
-    
-    </div>
-
+            <form action="" method="POST">
+                <input type="hidden" name="worldName" value="<%= name %>">
+                <button type="submit"> Load World </button>
+            </form>
+        </div>
+    <% } %> 
 </body>
 </html>

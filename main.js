@@ -1,46 +1,58 @@
 
-require("dotenv").config();
+
 const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
-const Player = require("./model/Player");
 
+// load the .env
+require("dotenv").config({ path: path.resolve(__dirname, ".env")});
+
+//constants 
 const portNum = 5001;
 const uri = process.env.MONGO_CONNECTION_STRING;
-mongoose.connect(uri);
 const app = express();
- 
+
+//import model 
+const Player = require("./model/Player");
+
+// middleware and view engine
 app.set("view engine", "ejs");
-app.set("templates", path.resolve(__dirname, "templates"));
+app.set("views", path.resolve(__dirname, "views"));
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
 
-app.listen(portNum, () => { 
-    console.log(`Web server started and running at http://localhost:${portNum}\n`);
-});
+mongoose.connect(uri)
+    .then(() => {
+        console.log("connected to MongoDB via Mongoose");
+        app.listen(portNum, async () => { 
+            console.log(`Web server started and running at http://localhost:${portNum}\n`);
+        });
+    })
+    .catch(err => console.error(err));
 
-/** On startup... Welcome Screen, with API */
 app.get("/", async (req, res) => {
-    try{
+    try {
         const response = await fetch("https://api.animechan.io/v1/quotes/random");
         const quote = await response.json();
-    /** 
-    console.log("API response:", quote);
-    console.log("Extracted quote:", quote.data.content); 
-    */
-        res.render("homeScreen", { quote: quote.data.content});
+        res.render("homeScreen", { quote: quote.data.content });
     } catch (e) {
-        console.error("API ERROR:", e);
-        res.render("homeScreen", {quote: "Hmm, no advice for now... \n (out of API Tokens)"}); 
+        res.render("homeScreen", { quote: "Hmm, no advice for now..." }); 
     }
 });
 
+app.get("/returningPlayer", (req, res) => { res.render("returningPlayer"); });
 
-app.get("/returningPlayer", (req, res) => {
-    res.render("returningPlayer");
+/**
+app.post("/returningPlayer", (req, res) => { 
+    try {
+        const player = {
+        username: req.body.username,
+        password: req.body.password
+        }
+        await req.db. ... 
+    }
 });
-
-app.get("/createPlayer", (req, res) => {
-    res.render("createPlayer");
-});
+*/
 
 
 

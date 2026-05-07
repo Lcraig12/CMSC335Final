@@ -42,7 +42,7 @@ app.get("/", async (req, res) => {
     }
 });
 
-app.get("/createPlayer", (req, res) => { res.render("createPlayer"); });
+app.get("/createPlayer", (req, res) => { res.render("createPlayer", {error: null}); });
 
 app.post("/createPlayer", async (req, res) => { 
     try { 
@@ -56,7 +56,7 @@ app.post("/createPlayer", async (req, res) => {
             return res.render("createPlayer", { error: "Username already taken. Try another!"});
         }
 
-        const player = new Player({ username: formUsername, password: formPassword, worlds: {} });
+        const player = new Player({ username: formUsername, password: formPassword, worlds: new Map() });
         const savedPlayer = await player.save();
         console.log("Player saved to DB:", savedPlayer);
 
@@ -101,6 +101,7 @@ app.get("/worldList", async (req, res) => {
     }
 
     const player = await Player.findOne({username: username });
+    if (!player) return res.redirect("/returningPlayer");
     const worlds = Object.fromEntries(player.worlds);
     res.render("worldList", { player, worlds });
 

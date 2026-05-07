@@ -57,7 +57,7 @@ app.post("/createPlayer", async (req, res) => {
             return res.render("createPlayer", { error: "Username already taken. Try another!"});
         }
 
-        const player = new Player({ username: formUsername, password: formPassword, worlds: new Map() });
+        const player = new Player({ username: formUsername, password: hashWord(formUsername, formPassword), worlds: new Map() });
         const savedPlayer = await player.save();
         console.log("Player saved to DB:", savedPlayer);
 
@@ -82,7 +82,7 @@ app.post("/returningPlayer", async (req,res) => {
             return res.render("returningPlayer", {error: "Player not found!"});
         }
 
-        if (player.password === formPassword) {
+        if (player.password === hashWord(formUsername,formPassword)) {
             res.cookie("username", formUsername);
             res.redirect("/worldList");
         } else {
@@ -158,7 +158,7 @@ app.post("/home", (req,res) => { //this is specifically for when the game gets s
 */
 
 //this function takes the raw worlds from the table, the username, and the path, and returns a string containing the table that is ready to be
-//inserted into an innerHTML element somewhere. -Ian
+//inserted into an innerHTML element somewhere. -Ian Note: This is redundant now.
 function getTableFromWorlds(worlds,username,path) {//this messed up formatting is what I get for writing this in notepad.
 	const wv = JSON.parse(worlds);
 	let ret = "<table>";
@@ -176,10 +176,9 @@ function getTableFromWorlds(worlds,username,path) {//this messed up formatting i
 	return ret;
 }
 
-/**
+
 // this function hashes the password (uses the username as a salt because we aren't storing the salt in the database (which is not necessarily a bad thing))
 function hashword(username, password) {//username is used for extra noise
 	const hash = crypto.createHash('sha256');
 	return hash.update(username.concat(password)).digest('utf8');
 }
-*/

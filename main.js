@@ -4,6 +4,7 @@ const path = require("path");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
+const crtpyo = require('crypto'); //this is for storing passwords
 
 // load the .env
 require("dotenv").config({ path: path.resolve(__dirname, ".env")});
@@ -59,6 +60,14 @@ app.post("/returningPlayer", async (req,res) => {
             res.redirect("/worldList");
         } else {
             res.render("returningPlayer", { error: "Wrong Password. Try again." });
+app.get("/createPlayer", (req, res) => { res.render("createPlayer"); });
+
+/**
+app.post("/returningPlayer", (req, res) => { 
+    try {
+        const player = {
+        username: req.body.username,
+        password: req.body.password
         }
     } catch (e) {
         console.error(e);
@@ -131,4 +140,10 @@ function getTableFromWorlds(worlds,username,path) {//this messed up formatting i
 	});
 	ret = ret.concat("</table>");
 	return ret;
+}
+
+/*this function hashes the password (uses the username as a salt because we aren't storing the salt in the database (which is not necessarily a bad thing))*/
+function hashword(username, password) {//username is used for extra noise
+	const hash = crypto.createHash('sha256');
+	return hash.update(username.concat(password)).digest('utf8');
 }

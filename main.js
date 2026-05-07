@@ -124,10 +124,15 @@ app.get("/worldList", async (req, res) => {
 
 
 app.post("/play", (req,res) => {
-    let {world} = req.body;
+    let {semiworld} = req.body;
     const variables = {
         path: path,
-        world:world
+        world: {
+			isNew: false,
+			name: /*need to get*/,
+			world: semiworld,
+			username: /*need to get*/
+		}
     }
     res.render("open",variables);
 });

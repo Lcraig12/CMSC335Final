@@ -38,8 +38,9 @@ app.get("/returningPlayer", (req, res) => {
     res.render("returningPlayer");
 });
 
-
-
+app.get("/createPlayer", (req, res) => {
+    res.render("createPlayer");
+});
 
 
 

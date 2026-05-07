@@ -43,6 +43,33 @@ app.get("/", async (req, res) => {
     }
 });
 
+app.get("/createPlayer", (req, res) => { res.render("createPlayer", {error: null}); });
+
+app.post("/createPlayer", async (req, res) => { 
+    try { 
+        const formUsername = req.body.username;
+        const formPassword = req.body.password;
+        const formConfirmPassword = req.body.confirmPassword;
+
+        const existingPlayer = await Player.findOne({username: formUsername});
+
+        if (existingPlayer) { 
+            return res.render("createPlayer", { error: "Username already taken. Try another!"});
+        }
+
+        const player = new Player({ username: formUsername, password: formPassword, worlds: new Map() });
+        const savedPlayer = await player.save();
+        console.log("Player saved to DB:", savedPlayer);
+
+        res.cookie("username", formUsername);
+        res.redirect("/worldList");
+
+    } catch (e) {
+        console.error(e);
+        res.status(500).send("Server Error");
+    }
+});
+
 app.get("/returningPlayer", (req, res) => { res.render("returningPlayer"); });
 
 app.post("/returningPlayer", async (req,res) => {
@@ -52,7 +79,7 @@ app.post("/returningPlayer", async (req,res) => {
         const player = await Player.findOne({ username: formUsername });
 
         if (!player) {
-            return res.render("/returningPlayer", {error: "Player not found!"});
+            return res.render("returningPlayer", {error: "Player not found!"});
         }
 
         if (player.password === formPassword) {
@@ -83,6 +110,7 @@ app.get("/worldList", async (req, res) => {
     }
 
     const player = await Player.findOne({username: username });
+    if (!player) return res.redirect("/returningPlayer");
     const worlds = Object.fromEntries(player.worlds);
     res.render("worldList", { player, worlds });
 

@@ -76,13 +76,13 @@ app.post("/returningPlayer", async (req,res) => {
     try { 
         const formUsername = req.body.username;
         const formPassword = req.body.password;
-        const player = await Player.findOne({ username: formUsername });
+        const player = await findOne({ username: formUsername });
 
         if (!player) {
             return res.render("returningPlayer", {error: "Player not found!"});
         }
 
-        if (player.password === hashWord(formUsername,formPassword)) {
+        if (password === hashWord(formUsername,formPassword)) {
             res.cookie("username", formUsername);
             res.redirect("/worldList");
         } else {
@@ -115,9 +115,9 @@ app.get("/worldList", async (req, res) => {
         return res.redirect("/returningPlayer");
     }
 
-    const player = await Player.findOne({username: username });
+    const player = await findOne({username: username });
     if (!player) return res.redirect("/returningPlayer");
-    const worlds = Object.fromEntries(player.worlds);
+    const worlds = Object.fromEntries(worlds);
     res.render("worldList", { player, worlds });
 
 })
@@ -132,11 +132,13 @@ app.post("/play", (req,res) => {
     res.render("open",variables);
 });
 
-/**
-app.post("/home", (req,res) => { //this is specifically for when the game gets saved.
+
+app.post("/home", async (req,res) => { //this is specifically for when the game gets saved.
     let {world,worldname,username} = req.body;
     //this is where database stuff has to happen.
-    let gs = // some code that gets the worlds vector from the database given the username IMPLEMENT THIS 
+
+	const player = await findOne({username: username });
+    let gs = player.worlds;
     let gso = JSON.parse(gs);
     let findex = -1;
     for (let i = 0; i < gso.length; i++) {
@@ -151,11 +153,11 @@ app.post("/home", (req,res) => { //this is specifically for when the game gets s
     }
     let g2 = JSON.stringify(gso);
 	
-    // now we Need some code that will put g2 back in the database where gs was previously IMPLEMENT THIS TOO
+    player.worlds = g2;
 
     res.render("homeScreen"); //I'm not sure if going directly to home with no fields is correct but that's a problem for later.
 });
-*/
+
 
 //this function takes the raw worlds from the table, the username, and the path, and returns a string containing the table that is ready to be
 //inserted into an innerHTML element somewhere. -Ian Note: This is redundant now.

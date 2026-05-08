@@ -155,7 +155,7 @@ function hashWord(username, password) {//username is used for extra noise
 
 app.post("/home", async (req,res) => { //this is specifically for when the game gets saved.
     let {world,name,username} = req.body;
-    console.log(req.body);
+    //console.log(req.body);
     //this is where database stuff has to happen.
 
 	const player = await Player.findOne({username: username });
@@ -169,7 +169,11 @@ app.post("/home", async (req,res) => { //this is specifically for when the game 
 		}
     }
     if (findex == -1) {
-		console.error(`Error: Could not find world ${name} in files of user ${username}`);
+		//console.error(`Error: Could not find world ${name} in files of user ${username}`);
+		gso.push({
+			name:name,
+			world:world
+		});
     } else {
 		gso[findex].world = world;//this is the part of the code that actually saves it
     }

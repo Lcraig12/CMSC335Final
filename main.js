@@ -141,3 +141,29 @@ function hashWord(username, password) {//username is used for extra noise
 	return hash.update(username.concat(password)).digest('utf8');
 }
 
+app.post("/home", async (req,res) => { //this is specifically for when the game gets saved.
+    let {world,worldname,username} = req.body;
+    //this is where database stuff has to happen.
+
+	const player = await findOne({username: username });
+    let gs = player.worlds;
+    let gso = JSON.parse(gs);
+    let findex = -1;
+    for (let i = 0; i < gso.length; i++) {
+		if(gso[i].name === worldname) {
+		    findex = i;
+		}
+    }
+    if (findex == -1) {
+		console.error(`Error: Could not find world ${worldname} in files of user ${username}`);
+    } else {
+		gso[findex].world = world;//this is the part of the code that actually saves it
+    }
+    let g2 = JSON.stringify(gso);
+	
+    player.worlds = g2;
+
+    res.render("homeScreen"); //I'm not sure if going directly to home with no fields is correct but that's a problem for later.
+});
+
+

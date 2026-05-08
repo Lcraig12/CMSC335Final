@@ -7,29 +7,15 @@
 </head>
 <body>
     <h1> <%= player.username %>, select a world from the list: </h1>
-    <!--
-    <% for (const [name, world] of Object.entries(JSON.parse(player.worlds))) { %>
-        <div>
-            <h3><%= name %></h3>
-            <! can put some type of data here I j dk what,
-
-            <form action="/play" method="POST">
-                <input type = "text" hidden name="worldName" value="<%= name %>">
-                <input type = "text" hidden name = "userName" value ="<%= player.username %>">
-                <input type = "text" hidden name="world" value="<%= world %>">
-                <input type = "text" hidden name="newness" value="false">
-                <button type="submit"> Load World </button>
-            </form>
-        </div>
-    <% } %>
--->
     <%- wl %>
+    <br><br>
     <form action="/play" method="POST">
                 Create New World
                 <input type = "text" name="worldName">
                 <input type = "text" hidden name = "userName" value ="<%= player.username %>">
                 <input type = "text" hidden name="world" value="">
                 <input type = "text" hidden name="newness" value="true">
+                <br>
                 <button type="submit"> Create World </button>
             </form>
 </body>

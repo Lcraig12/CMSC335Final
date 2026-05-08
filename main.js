@@ -133,17 +133,20 @@ app.post("/play", (req, res) => {
 });
 
 function getTableFromWorlds(worlds, username) {
+
     const wv = JSON.parse(worlds);
-    let ret = "<table>";
+    let ret = "";
     wv.forEach((e) => {
         const nw = { isNew: false, name: e.name, world: e.world, username: username };
-        ret = ret.concat(`<tr><td>${e.name}<form method="post" action="/play"><input type="text" hidden value="${e.name}" name="worldName">
+        //console.log(e)
+        console.log(e.name);
+        ret = ret.concat(`<br>${e.name}<form method="post" action="/play"><input type="text" hidden value="${e.name}" name="worldName">
 		<input type="text" hidden value="${username}" name="userName">
 		<input type="text" hidden value="${e.world}" name="world">
 		<input type="text" hidden value="false" name="newness">
-		<button type="submit">Play World</button></form></tr></td>`);
+		<button type="submit">Play World</button></form>`);
     });
-    ret = ret.concat("</table>");
+    //ret = ret.concat("</table>");
     return ret;
 }
 
@@ -160,7 +163,6 @@ app.post("/home", async (req,res) => { //this is specifically for when the game 
 
 	const player = await Player.findOne({username: username });
     let gs = player.worlds;
-    console.log(gs);
     let gso = JSON.parse(gs);
     let findex = -1;
     for (let i = 0; i < gso.length; i++) {
@@ -189,5 +191,4 @@ app.post("/home", async (req,res) => { //this is specifically for when the game 
     res.render("worldList", variable);
      //I'm not sure if going directly to home with no fields is correct but that's a problem for later.
 });
-
 

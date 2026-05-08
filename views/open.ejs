@@ -1174,6 +1174,7 @@
             document.getElementById("jason").innerHTML = fullpackage;
             document.getElementById("thomas").innerHTML = worldName;
             document.getElementById("thomastwo").innerHTML = userName;
+			gamelog("World Saved");
         }
 
         function importWorld() {
@@ -7599,7 +7600,7 @@ function floraf() {
                 <p id = "gl5" style ="background-color: beige;"></p>
             </fieldset>
             <hr>
-            <form method="post" action = "<%- path %>/home">
+            <form method="post" action = "/home">
                 <button type ="button" onclick="exportWorld()">Save World</button>
                 <!--<button id = "iwb" type ="button" onclick="importWorld()">Import World</button>>-->
                 <br>

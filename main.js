@@ -93,21 +93,6 @@ app.post("/returningPlayer", async (req,res) => {
     }
 });
 
-app.get("/createPlayer", (req, res) => { res.render("createPlayer"); });
-
-
-app.post("/returningPlayer", (req, res) => { 
-    try {
-        const player = {
-        username: req.body.username,
-        password: req.body.password
-        }
-    } catch (e) {
-        console.error(e);
-        res.status(500).send("Server Error");
-    }
-});
-
 app.get("/worldList", async (req, res) => {
     const username = req.cookies.username;
 
@@ -129,7 +114,7 @@ app.post("/worldList", async (req, res) => {
         return res.redirect("/returningPlayer");
     }
 
-    const player = await findOne({username: username });
+    const player = await Player.findOne({username: username });
     if (!player) return res.redirect("/returningPlayer");
     const worlds = Object.fromEntries(worlds);
     res.render("worldList", { player, worlds });

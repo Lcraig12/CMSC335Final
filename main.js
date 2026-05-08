@@ -137,8 +137,8 @@ function getTableFromWorlds(worlds, username) {
     let ret = "<table>";
     wv.forEach((e) => {
         const nw = { isNew: false, name: e.name, world: e.world, username: username };
-        ret = ret.concat(`<tr><td>${e.name}<form method="post" action="${path}/play"><input type="text" hidden value="${e.name}" name="worldName">
-		<input type="text" hidden value="${username}" name="userdName">
+        ret = ret.concat(`<tr><td>${e.name}<form method="post" action="/play"><input type="text" hidden value="${e.name}" name="worldName">
+		<input type="text" hidden value="${username}" name="userName">
 		<input type="text" hidden value="${e.world}" name="world">
 		<input type="text" hidden value="false" name="newness">
 		<button type="submit">Play World</button></form></tr></td>`);
@@ -154,7 +154,8 @@ function hashWord(username, password) {//username is used for extra noise
 }
 
 app.post("/home", async (req,res) => { //this is specifically for when the game gets saved.
-    let {world,worldname,username} = req.body;
+    let {world,name,username} = req.body;
+    console.log(req.body);
     //this is where database stuff has to happen.
 
 	const player = await Player.findOne({username: username });
@@ -163,18 +164,19 @@ app.post("/home", async (req,res) => { //this is specifically for when the game 
     let gso = JSON.parse(gs);
     let findex = -1;
     for (let i = 0; i < gso.length; i++) {
-		if(gso[i].name === worldname) {
+		if(gso[i].name === name) {
 		    findex = i;
 		}
     }
     if (findex == -1) {
-		console.error(`Error: Could not find world ${worldname} in files of user ${username}`);
+		console.error(`Error: Could not find world ${name} in files of user ${username}`);
     } else {
 		gso[findex].world = world;//this is the part of the code that actually saves it
     }
     let g2 = JSON.stringify(gso);
 	
     player.worlds = g2;
+    player.markModified('worlds');
 	await player.save();
 	const variable = {player: player,
 				worlds: gso,

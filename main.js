@@ -111,10 +111,10 @@ app.post("/worldList", async (req, res) => {
 });
 
 app.post("/play", (req, res) => {
-    let { world, name, username } = req.body;
+    let { worldname, username, world, newness } = req.body;
     const worldObject = {
-        isNew: false,
-        name: name,
+        isNew: newness,
+        name: worldname,
         world: world,
         username: username
     };

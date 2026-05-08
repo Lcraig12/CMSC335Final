@@ -137,7 +137,11 @@ function getTableFromWorlds(worlds, username) {
     let ret = "<table>";
     wv.forEach((e) => {
         const nw = { isNew: false, name: e.name, world: e.world, username: username };
-        ret = ret.concat(`<tr><td>${e.name}<form method="post" action="${path}/play"><input type="text" hidden value="${JSON.stringify(nw)}" name="world"><button type="submit">Play World</button></form></tr></td>`);
+        ret = ret.concat(`<tr><td>${e.name}<form method="post" action="${path}/play"><input type="text" hidden value="${e.name}" name="worldName">
+		<input type="text" hidden value="${username}" name="userdName">
+		<input type="text" hidden value="${e.world}" name="world">
+		<input type="text" hidden value="false" name="newness">
+		<button type="submit">Play World</button></form></tr></td>`);
     });
     ret = ret.concat("</table>");
     return ret;

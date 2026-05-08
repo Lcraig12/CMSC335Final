@@ -122,6 +122,20 @@ app.get("/worldList", async (req, res) => {
 
 })
 
+app.post("/worldList", async (req, res) => {
+    const username = req.body.username;
+
+    if (!username) { 
+        return res.redirect("/returningPlayer");
+    }
+
+    const player = await findOne({username: username });
+    if (!player) return res.redirect("/returningPlayer");
+    const worlds = Object.fromEntries(worlds);
+    res.render("worldList", { player, worlds });
+
+})
+
 
 app.post("/play", (req,res) => {
     let {wname, uname, worldactual, newness} = req.body;

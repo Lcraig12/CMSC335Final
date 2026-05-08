@@ -93,11 +93,11 @@ app.get("/worldList", async (req, res) => {
     const player = await Player.findOne({username: username });
     if (!player) return res.redirect("/returningPlayer");
     const worlds = JSON.parse(player.worlds);
-    const var = {player: player,
+    const variable = {player: player,
 				worlds: player.worlds,
 				wl: getTableFromWorlds(player.worlds, player.username)
 				}
-    res.render("worldList", var);
+    res.render("worldList", variable);
 
 })
 
@@ -111,11 +111,11 @@ app.post("/worldList", async (req, res) => {
     const player = await findOne({username: username });
     if (!player) return res.redirect("/returningPlayer");
     const worlds = JSON.parse(player.worlds);
-	const var = {player: player,
+	const variable = {player: player,
 				worlds: worlds,
 				wl: getTableFromWorlds(player.worlds, player.username)
 				}
-    res.render("worldList", var);
+    res.render("worldList", variable);
 });
 
 app.post("/play", (req, res) => {
@@ -175,11 +175,11 @@ app.post("/home", async (req,res) => { //this is specifically for when the game 
     let g2 = JSON.stringify(gso);
 	
     player.worlds = g2;
-	const var = {player: player,
+	const variable = {player: player,
 				worlds: gso,
 				wl: getTableFromWorlds(player.worlds, player.username)
 				}
-    res.render("worldList", var);
+    res.render("worldList", variable);
      //I'm not sure if going directly to home with no fields is correct but that's a problem for later.
 });
 

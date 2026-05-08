@@ -4,7 +4,7 @@ const path = require("path");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
-const crtpyo = require('crypto'); //this is for storing passwords
+const crypto = require('crypto'); //this is for storing passwords
 
 // load the .env
 require("dotenv").config({ path: path.resolve(__dirname, ".env")});

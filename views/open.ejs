@@ -85,11 +85,13 @@
 
 
         function onloadThings() {
+			
             randomizeSeed();
             player = createPlayer();
             //document.getElementById("character_creation").hidden="shown";
             putPlayerIntoCreator();
             //document.getElementById("character_creation").hidden="hidden";
+			importWorld();//this is new stuff. may not world well
 
         }
 

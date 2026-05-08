@@ -23,11 +23,11 @@
     <% } %>
     <form action="/play" method="POST">
                 Create New World
-                <input type = "text" name="worldName" value="<%= name %>">
+                <input type = "text" name="worldName">
                 <input type = "text" hidden name = "userName" value ="<%= player.username %>">
                 <input type = "text" hidden name="world" value="">
                 <input type = "text" hidden name="newness" value="true">
-                <button type="submit"> Load World </button>
+                <button type="submit"> Create World </button>
             </form>
 </body>
 </html>

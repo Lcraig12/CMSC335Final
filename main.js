@@ -130,12 +130,12 @@ app.post("/play", (req,res) => {
 	}
     const variables = {
         path: path,
-        world: {
+        world: JSON.stringify({
 			isNew: neww,
 			name: wname,
 			world: worldactual,
 			username: uname
-		}
+		})
     }
     res.render("open",variables);
 });

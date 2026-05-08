@@ -82,7 +82,7 @@ app.post("/returningPlayer", async (req,res) => {
             return res.render("returningPlayer", {error: "Player not found!"});
         }
 
-        if (password === hashWord(formUsername,formPassword)) {
+        if (player.password === hashWord(formUsername,formPassword)) {
             res.cookie("username", formUsername);
             res.redirect("/worldList");
         } else {
@@ -100,9 +100,9 @@ app.get("/worldList", async (req, res) => {
         return res.redirect("/returningPlayer");
     }
 
-    const player = await findOne({username: username });
+    const player = await Player.findOne({username: username });
     if (!player) return res.redirect("/returningPlayer");
-    const worlds = Object.fromEntries(worlds);
+    const worlds = Object.fromEntries(player.worlds);
     res.render("worldList", { player, worlds });
 
 })
@@ -118,8 +118,7 @@ app.post("/worldList", async (req, res) => {
     if (!player) return res.redirect("/returningPlayer");
     const worlds = Object.fromEntries(worlds);
     res.render("worldList", { player, worlds });
-
-})
+});
 
 
 app.post("/play", (req,res) => {
@@ -188,7 +187,7 @@ function getTableFromWorlds(worlds,username,path) {//this messed up formatting i
 
 
 // this function hashes the password (uses the username as a salt because we aren't storing the salt in the database (which is not necessarily a bad thing))
-function hashword(username, password) {//username is used for extra noise
+function hashWord(username, password) {//username is used for extra noise
 	const hash = crypto.createHash('sha256');
 	return hash.update(username.concat(password)).digest('utf8');
 }

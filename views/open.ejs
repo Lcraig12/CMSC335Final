@@ -1180,7 +1180,9 @@
         }
 
         function importWorld() {
+            console.log(document.getElementById("jason").value);
             let i0 = JSON.parse(document.getElementById("jason").value);
+            console.log(io.isNew);
             let k = i0.isNew;
             worldName = i0.name;
             userName = i0.username;

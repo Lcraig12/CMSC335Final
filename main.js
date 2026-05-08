@@ -4,7 +4,7 @@ const path = require("path");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
-const crtpyo = require('crypto'); //this is for storing passwords
+const crypto = require('crypto'); //this is for storing passwords
 
 // load the .env
 require("dotenv").config({ path: path.resolve(__dirname, ".env")});
@@ -76,7 +76,7 @@ app.post("/returningPlayer", async (req,res) => {
     try { 
         const formUsername = req.body.username;
         const formPassword = req.body.password;
-        const player = await findOne({ username: formUsername });
+        const player = await Player.findOne({ username: formUsername });
 
         if (!player) {
             return res.render("returningPlayer", {error: "Player not found!"});

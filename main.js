@@ -164,7 +164,7 @@ app.post("/home", async (req,res) => { //this is specifically for when the game 
 	
     player.worlds = g2;
 
-    res.render("homeScreen"); //I'm not sure if going directly to home with no fields is correct but that's a problem for later.
+    res.render("worldList", { player, g2 }); //I'm not sure if going directly to home with no fields is correct but that's a problem for later.
 });
 
 

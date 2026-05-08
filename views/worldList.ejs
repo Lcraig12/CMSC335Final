@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>worldList</title>
+    <title>Document</title>
 </head>
 <body>
     <h1> <%= player.username %>, select a world from the list: </h1>
-    <% for (const [name, world] of Object.entries(worlds)) { %>
+    <% for (const [name, world] of Object.entries(JSON.parse(player.worlds))) { %>
         <div>
             <h3><%= name %></h3>
             <!-- can put some type of data here I j dk what,-->
@@ -22,7 +22,7 @@
         </div>
     <% } %>
     <form action="/play" method="POST">
-                Enter New World Name: 
+                Create New World
                 <input type = "text" name="worldName">
                 <input type = "text" hidden name = "userName" value ="<%= player.username %>">
                 <input type = "text" hidden name="world" value="">

@@ -76,7 +76,7 @@ app.post("/returningPlayer", async (req,res) => {
     try { 
         const formUsername = req.body.username;
         const formPassword = req.body.password;
-        const player = await findOne({ username: formUsername });
+        const player = await Player.findOne({ username: formUsername });
 
         if (!player) {
             return res.render("returningPlayer", {error: "Player not found!"});

@@ -7,6 +7,7 @@
 </head>
 <body>
     <h1> <%= player.username %>, select a world from the list: </h1>
+    <!--
     <% for (const [name, world] of Object.entries(JSON.parse(player.worlds))) { %>
         <div>
             <h3><%= name %></h3>
@@ -21,6 +22,8 @@
             </form>
         </div>
     <% } %>
+-->
+    <%- wl ->
     <form action="/play" method="POST">
                 Create New World
                 <input type = "text" name="worldName">

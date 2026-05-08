@@ -175,9 +175,10 @@ app.post("/home", async (req,res) => { //this is specifically for when the game 
     let g2 = JSON.stringify(gso);
 	
     player.worlds = g2;
+	await player.save();
 	const variable = {player: player,
 				worlds: gso,
-				wl: getTableFromWorlds(player.worlds, player.username)
+				wl: getTableFromWorlds(g2, player.username)
 				}
     res.render("worldList", variable);
      //I'm not sure if going directly to home with no fields is correct but that's a problem for later.

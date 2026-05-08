@@ -49,7 +49,7 @@ app.post("/createPlayer", async (req, res) => {
         }
 
         const hashedPassword = hashWord(formUsername, formPassword);
-        const player = new Player({ username: formUsername, password: hashedPassword, worlds: new Map() });
+        const player = new Player({ username: formUsername, password: hashedPassword, worlds: JSON.stringify([]) });
         await player.save();
 
         res.cookie("username", formUsername);
@@ -92,7 +92,7 @@ app.get("/worldList", async (req, res) => {
 
     const player = await Player.findOne({username: username });
     if (!player) return res.redirect("/returningPlayer");
-    const worlds = Object.fromEntries(player.worlds);
+    const worlds = JSON.parse(player.worlds);
     res.render("worldList", { player, worlds });
 
 })
@@ -111,12 +111,12 @@ app.post("/worldList", async (req, res) => {
 });
 
 app.post("/play", (req, res) => {
-    let { worldname, username, world, newness } = req.body;
+    let { worldName, userName, world, newness } = req.body;
     const worldObject = {
         isNew: newness,
-        name: worldname,
+        name: worldName,
         world: world,
-        username: username
+        username: userName
     };
     res.render("open", {
         path: path,
@@ -145,8 +145,9 @@ app.post("/home", async (req,res) => { //this is specifically for when the game 
     let {world,worldname,username} = req.body;
     //this is where database stuff has to happen.
 
-	const player = await findOne({username: username });
+	const player = await Player.findOne({username: username });
     let gs = player.worlds;
+    console.log(gs);
     let gso = JSON.parse(gs);
     let findex = -1;
     for (let i = 0; i < gso.length; i++) {

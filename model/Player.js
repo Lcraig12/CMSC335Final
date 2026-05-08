@@ -4,7 +4,7 @@ const {Schema, model } = mongoose;
 const playerSchema = new Schema ({
    username: String,
    password: String,
-   worlds: {type: Map, of: Schema.Types.Mixed, default: {}}
+   worlds: String
 }); 
 
 const Player = model("Player", playerSchema);

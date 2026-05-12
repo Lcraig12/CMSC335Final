@@ -100,6 +100,7 @@ app.get("/worldList", async (req, res) => {
     res.render("worldList", variable);
 });
 
+/** TODO NOT SURE WE NEED THIS, FROM MY SHORT TESTING IT SEEMS EVERYTHING IS THE SAME, EVEN IN THE DB
 app.post("/worldList", async (req, res) => {
     const username = req.body.username;
 
@@ -116,6 +117,7 @@ app.post("/worldList", async (req, res) => {
 				}
     res.render("worldList", variable);
 });
+*/
 
 app.post("/play", (req, res) => {
     let { worldname, username, world, newness } = req.body;

@@ -1173,9 +1173,11 @@
             norms.push(historicThingVec);
             
             let fullpackage = JSON.stringify(norms);
-            document.getElementById("jason").innerHTML = fullpackage;
+            /** TODO I THINK THIS WAS CAUSING ISSUES, IT UPDATES THE NAMES MAKING THINGS SHOW UP AS UNDEFINED OR EMPTY WHEN SAVING / EXITING THE WORLD
+             * document.getElementById("jason").innerHTML = fullpackage;
             document.getElementById("thomas").innerHTML = worldname;
-            document.getElementById("thomastwo").innerHTML = username;
+            document.getElementById("thomastwo").innerHTML = username; 
+            */
 			gamelog("World Saved");
         }
 
@@ -7604,14 +7606,20 @@ function floraf() {
                 <p id = "gl5" style ="background-color: beige;"></p>
             </fieldset>
             <hr>
+            <!-- KEEP THE DATA THE SAME -->
+            <% 
+                // This line MUST exist before you try to use the variable below
+                const initialData = JSON.parse(world); 
+            %>
             <form method="post" action = "/home">
                 <button type ="button" onclick="exportWorld()">Save World</button>
                 <!--<button id = "iwb" type ="button" onclick="importWorld()">Import World</button>>-->
                 <br>
                 <div hidden>
                 <textarea id="jason" name = "world" ><%- world %></textarea>
-                <textarea id = "thomas" name="name" ></textarea>
-                <textarea id = "thomastwo" name="username"></textarea>
+                <!-- TODO:  updated along with the above -->
+                <textarea id = "thomas" name="worldname" ><%= initialData.name %></textarea>
+                <textarea id = "thomastwo" name="username"><%= initialData.username %></textarea>
                 </div>
                 <br>
                 <button type = "submit">Exit Game</button>

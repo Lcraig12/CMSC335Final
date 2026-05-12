@@ -76,7 +76,7 @@ app.post("/returningPlayer", async (req,res) => {
             res.cookie("username", formUsername);
             res.redirect("/worldList");
         } else {
-            res.render("returningPlayer", { error: "Wrong Password. Try again." });
+            return res.render("returningPlayer", { error: "Wrong Password. Try again." });
         }
     } catch (e) { 
         res.send("Server Error");
@@ -98,8 +98,7 @@ app.get("/worldList", async (req, res) => {
 				wl: getTableFromWorlds(player.worlds, player.username)
 				}
     res.render("worldList", variable);
-
-})
+});
 
 app.post("/worldList", async (req, res) => {
     const username = req.body.username;
@@ -119,12 +118,12 @@ app.post("/worldList", async (req, res) => {
 });
 
 app.post("/play", (req, res) => {
-    let { worldName, userName, world, newness } = req.body;
+    let { worldname, username, world, newness } = req.body;
     const worldObject = {
         isNew: newness,
-        name: worldName,
+        name: worldname,
         world: world,
-        username: userName
+        username: username
     };
     res.render("open", {
         path: path,
@@ -140,8 +139,8 @@ function getTableFromWorlds(worlds, username) {
         const nw = { isNew: false, name: e.name, world: e.world, username: username };
         //console.log(e)
         console.log(e.name);
-        ret = ret.concat(`<br>${e.name}<form method="post" action="/play"><input type="text" hidden value="${e.name}" name="worldName">
-		<input type="text" hidden value="${username}" name="userName">
+        ret = ret.concat(`<br>${e.name}<form method="post" action="/play"><input type="text" hidden value="${e.name}" name="worldname">
+		<input type="text" hidden value="${username}" name="username">
 		<input type="text" hidden value="${e.world}" name="world">
 		<input type="text" hidden value="false" name="newness">
 		<button type="submit">Play World</button></form>`);
@@ -157,24 +156,30 @@ function hashWord(username, password) {//username is used for extra noise
 }
 
 app.post("/home", async (req,res) => { //this is specifically for when the game gets saved.
-    let {world,name,username} = req.body;
+    let {world, worldname, username} = req.body;
     //console.log(req.body);
     //this is where database stuff has to happen.
 
 	const player = await Player.findOne({username: username });
+
+    if (!player) {
+        console.error(`Player ${username} not found in database.`);
+        return res.status(404).send("Player not found");
+    }
+
     let gs = player.worlds;
     let gso = JSON.parse(gs);
     let findex = -1;
     for (let i = 0; i < gso.length; i++) {
-		if(gso[i].name === name) {
+		if(gso[i].name === worldname) {
 		    findex = i;
 		}
     }
     if (findex == -1) {
 		//console.error(`Error: Could not find world ${name} in files of user ${username}`);
 		gso.push({
-			name:name,
-			world:world
+			name: worldname,
+			world: world
 		});
     } else {
 		gso[findex].world = world;//this is the part of the code that actually saves it

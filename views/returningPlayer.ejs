@@ -7,8 +7,9 @@
 </head>
 <body>
     <div id="returningPlayerLogin">
-        <form action="/worldList" method="get">
-        <legend style="border: solid 1px black"><h3>Log In</h1>
+        <form action="/returningPlayer" method="post"> <!-- NEED TO CHANGE, CANNOT BE GET - HUGE BACKDOOR, look at url 
+            http:// localhost:5001/worldList? username=coffeebeans&password=1, IT HAS PASSWORD IN IT -->
+        <legend style="border: solid 1px black"><h3>Log In</h3>
             <label for="username">Username: </label>
             <input type="text" id="username" name="username" required>
             

@@ -30,8 +30,8 @@
         exit
 
         */
-        let userName = undefined;
-        let worldName = undefined;
+        let username = undefined;
+        let worldname = undefined;
         let playerx = 10;
         let playery = 10;
         const VIEWPORTSIZE = 32;
@@ -1174,8 +1174,8 @@
             
             let fullpackage = JSON.stringify(norms);
             document.getElementById("jason").innerHTML = fullpackage;
-            document.getElementById("thomas").innerHTML = worldName;
-            document.getElementById("thomastwo").innerHTML = userName;
+            document.getElementById("thomas").innerHTML = worldname;
+            document.getElementById("thomastwo").innerHTML = username;
 			gamelog("World Saved");
         }
 
@@ -1184,8 +1184,8 @@
             let i0 = JSON.parse(document.getElementById("jason").value);
             console.log(io.isNew);
             let k = i0.isNew;
-            worldName = i0.name;
-            userName = i0.username;
+            worldname = i0.name;
+            username = i0.username;
             if (!k) {
 
             

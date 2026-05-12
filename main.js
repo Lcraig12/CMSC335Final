@@ -140,10 +140,11 @@ function getTableFromWorlds(worlds, username) {
     wv.forEach((e) => {
         const nw = { isNew: false, name: e.name, world: e.world, username: username };
         //console.log(e)
-        console.log(e.name);
+        //console.log(e.name);
+		let strworld = e.world.replaceAll('"',"_Q_").replaceAll(" ","_S_");//this is dumb and wierd as hell but it works
         ret = ret.concat(`<br>${e.name}<form method="post" action="/play"><input type="text" hidden value="${e.name}" name="worldname">
 		<input type="text" hidden value="${username}" name="username">
-		<input type="text" hidden value="${e.world}" name="world">
+		<input type="text" hidden value="${strworld}" name="world">
 		<input type="text" hidden value="false" name="newness">
 		<button type="submit">Play World</button></form>`);
     });

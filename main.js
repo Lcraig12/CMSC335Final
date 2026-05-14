@@ -141,12 +141,14 @@ function getTableFromWorlds(worlds, username) {
         const nw = { isNew: false, name: e.name, world: e.world, username: username };
         //console.log(e)
         //console.log(e.name);
-		let strworld = e.world.replaceAll('"',"_Q_").replaceAll(" ","_S_");//this is dumb and wierd as hell but it works
+        let strworld = e.world.replaceAll('"','_K_').replaceAll(" ","_S_");//this is to fix this wierd-as-hell bug. just trust me this works
+        
+        //console.log(`inserting world ${strworld}`);
         ret = ret.concat(`<br>${e.name}<form method="post" action="/play"><input type="text" hidden value="${e.name}" name="worldname">
 		<input type="text" hidden value="${username}" name="username">
-		<input type="text" hidden value="${strworld}" name="world">
+		<input type="text" hidden value =  `.concat(strworld).concat(`  name="world">
 		<input type="text" hidden value="false" name="newness">
-		<button type="submit">Play World</button></form>`);
+		<button type="submit">Play World</button></form>`));
     });
     //ret = ret.concat("</table>");
     return ret;
@@ -179,11 +181,12 @@ app.post("/home", async (req,res) => { //this is specifically for when the game 
 		}
     }
     if (findex == -1) {
-		//console.error(`Error: Could not find world ${name} in files of user ${username}`);
+		
 		gso.push({
 			name: worldname,
 			world: world
 		});
+        //console.log(`pushing world called \n ${world}`);
     } else {
 		gso[findex].world = world;//this is the part of the code that actually saves it
     }

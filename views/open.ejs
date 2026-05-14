@@ -1188,7 +1188,7 @@
             let k = i0.isNew;
             worldname = i0.name;
             username = i0.username;
-            if (!k) {
+            if (!k || (k == "false")) {
 
             
                 let imported = JSON.parse(i0.world.replaceAll("_Q_",'"').replaceALL("_S_"," "));

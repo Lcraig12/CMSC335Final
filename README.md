@@ -4,7 +4,7 @@ CMSC335 Final
 Submitted By:
 
 Group Memebers:
-- Yaniv Ashwal ( 118776446 )
+- Yaniv Ashwal ( yashwal )
 - Logan Craig ( lcraig12 )
 - Ian Parsons ( iparsons )
 

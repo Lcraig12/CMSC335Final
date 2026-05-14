@@ -1159,7 +1159,7 @@
 
         function exportWorld(){ 
             aboutToSave = 1;
-            advanceTime(currentTime + 1.01);//this is necessary, because all animals have to run homeostasis in order to clear their angery lists.
+            advanceTime(currentTime + SECINTERVAL + 0.01);//this is necessary, because all animals have to run homeostasis in order to clear their angery lists.
             let norms = [playerx,playery,originalSeed,globalMode,mapSize,currentTime,actionQueue,gameLodge];//need player and world data
             cullRegions();
             let eGood = [];
@@ -1173,7 +1173,7 @@
             norms.push(historicThingVec);
             
             let fullpackage = JSON.stringify(norms);
-            //nah these weren't the problem.
+            //* TODO I THINK THIS WAS CAUSING ISSUES, IT UPDATES THE NAMES MAKING THINGS SHOW UP AS UNDEFINED OR EMPTY WHEN SAVING / EXITING THE WORLD
             document.getElementById("jason").innerHTML = fullpackage;
             document.getElementById("thomas").innerHTML = worldname;
             document.getElementById("thomastwo").innerHTML = username; 
@@ -1182,16 +1182,17 @@
         }
 
         function importWorld() {
-            //console.log(document.getElementById("jason").value);
-            let i0 = JSON.parse(document.getElementById("jason").value);
+            console.log("importing world");
             
+            let i0 = JSON.parse(document.getElementById("jason").value);
+            console.log(i0);
             let k = i0.isNew;
             worldname = i0.name;
             username = i0.username;
-            if (!k || (k == "false")) {
+            if (k === "false" || !k) {
 
-            
-                let imported = JSON.parse(i0.world.replaceAll("_Q_",'"').replaceALL("_S_"," "));
+                console.log(i0.world);
+                let imported = JSON.parse(i0.world.replaceAll("_K_",'"').replaceAll("_S_"," "));
                 playerx = imported[0];
                 playery = imported[1];
                 //c= imported[2];
@@ -1213,8 +1214,8 @@
                 }
                 first();
                 player = Object.assign(new thing,JSON.parse(imported[9]));
-				player.x = playerx;
-				player.y = playery;
+                player.x = playerx;
+                player.y = playery;
                 player.soul = Object.assign(new soul,player.soul);
                 historicThingVec = imported[10];
                 //console.log(player);

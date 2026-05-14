@@ -14,6 +14,6 @@ APIs: This API pulls quotes from various anime to offer tongue-in-cheek 'advice,
 
 Contact Email:  ibpar4@gmail.com, yashwal@terpmail.umd.edu
 
-Deployed App Link: 
+Deployed App Link: https://cmsc335final-b1r5.onrender.com/
 
 AI Use (if applicable):

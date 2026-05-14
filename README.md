@@ -1,7 +1,7 @@
 # CMSC335Final
 CMSC335 Final
 
-Submitted By:
+Submitted By: Logan Craig (lcraig12)
 
 Group Members:
 - Yaniv Ashwal ( yashwal )

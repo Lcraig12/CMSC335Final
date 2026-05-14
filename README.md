@@ -5,7 +5,7 @@ Submitted By:
 
 Group Memebers:
 - Yaniv Ashwal ( 118776446 )
-- Logan Craig ( 119520710 )
+- Logan Craig ( lcraig12 )
 - Ian Parsons ( iparsons )
 
 App Description: Service that contains an open-world procedurally generated rpg video game, and that allows users to sign in, create worlds, and continue previous games.
